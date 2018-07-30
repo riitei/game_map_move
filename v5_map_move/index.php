@@ -17,14 +17,14 @@
             display: inline;
             width: 100px;
             height: 100px;
+
         }
 
         /*地圖範圍*/
         .map {
             position: absolute;
             z-index: 0;
-            left: 0px; /*去除邊框*/
-            top: 0px; /*去除邊框*/
+
         }
 
         /*通行*/
@@ -44,13 +44,17 @@
             background: blueviolet;
             float: left;
         }
+        /*以達成視窗左右平分*/
+        .center {
+            margin: auto;
+        }
 
     </style>
 
 </head>
+<body>
 
-<!--地圖-->
-<div id="game" class="fixed-top">
+<div id="center" class="center">
     <div id="map" class="map"></div>
     <!--圖片-->
     <img id="start" class="photo" src="photo/start.jpg">
@@ -60,15 +64,16 @@
     <img id="right" class="photo" src="photo/right.png" style="display: none">
 </div>
 
+</body>
 <script type="text/javascript">
     // var map = [
     //     [0, 0, 0, 0],
     //     [0, 0, 1, 0]];
-    var map = [
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 1, 0, 0, 1, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-    ];
+    // var map = [
+    //     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    //     [0, 1, 0, 0, 1, 0, 0, 0, 0, 0],
+    //     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    // ];
     // var map = [
     //     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     //     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -80,59 +85,69 @@
     //     [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
     //     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     //     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]];
-    // var map = [
-    //     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    //     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    //     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    //     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    //     [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    //     [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0],
-    //     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0],
-    //     [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0],
-    //     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0],
-    //     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0],
-    //     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0],
-    //     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0],
-    //     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0],
-    //     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0],
-    //     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0],
-    //     [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0],
-    //     [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0],
-    //     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0],
-    //     [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0],
-    //     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0],
-    //     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0],
-    //     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0]];
+    var map = [
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0],
+        [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0],
+        [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0],
+        [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0],
+        [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0]];
     // map陣列值為 0 可以圖片通行
     // map陣列值為 1 可以圖片通行
     var map_vertical = map.length;// 欄
     var map_horizontal = map[map.length - 1].length;// 列
-    var show_map_vertical_length = 2; // 顯示垂直長度
-    var show_map_horizontal_length = 9; // 顯示水平長度
-    var photo_vertical = 0;//3 圖片初始位置 陣列 欄
-    var photo_horizontal = 8;//6 圖片初始位置 陣列 列
+    var show_map_vertical_length = 8; // 顯示垂直長度
+    var show_map_horizontal_length = 8; // 顯示水平長度
+    var photo_vertical = 6;//3 圖片初始位置 陣列 欄
+    var photo_horizontal = 6;//6 圖片初始位置 陣列 列
     // 初始地圖
     $("#map").css("height", show_map_vertical_length * 100 + "px");// 透過陣列 橫 得知地圖最大高度範圍
     $("#map").css("width", show_map_horizontal_length * 100 + "px");//透過陣列 列 得知地圖最大長度範圍
-    //
+
+
     var draw_photo =
-        draw_print(map, photo_vertical, photo_horizontal, map_vertical, map_horizontal, show_map_vertical_length, show_map_horizontal_length);
+        draw_print(
+            map,
+            photo_vertical,
+            photo_horizontal,
+            map_vertical,
+            map_horizontal,
+            show_map_vertical_length,
+            show_map_horizontal_length);
     //
-    var top = photo_move_range(
+    var define_vertical = photo_move_range(
         draw_photo["photo_vertical_start"],
         draw_photo["photo_vertical_end"],
         draw_photo["vertical_range"],
         draw_photo["map_vertical"]);
-    var left = photo_move_range(
+
+    var define_horizontal = photo_move_range(
         draw_photo["photo_horizontal_start"],
         draw_photo["photo_horizontal_end"],
         draw_photo["horizontal_range"],
         draw_photo["map_horizontal"]);
-    show_photo_move(top, left, "start");
+
+    show_photo_move(define_vertical, define_horizontal, "start");
+
     // 鍵盤出發圖片在地圖移動方向
     $(document).keydown(function (event) {
         //
-        // var direction = "";
         var move_place;
         //
         switch (event.which) {
@@ -259,13 +274,13 @@
     }
 
 
-    function photo_move_range(photo_start, photo_end, range, map_horizontal) {
+    function photo_move_range(photo_start, photo_end, range, map_horizontal_vertical_length) {
 
         if (photo_start < 0) {
             range = photo_start + range;
         }
-        if (photo_start > map_horizontal - (photo_end - photo_start + 1)) {
-            range = photo_start + (photo_end - photo_start + 1) - map_horizontal + range;
+        if (photo_start > map_horizontal_vertical_length - (photo_end - photo_start + 1)) {
+            range = photo_start + (photo_end - photo_start + 1) - map_horizontal_vertical_length + range;
         }
         return range;
     }
@@ -354,6 +369,29 @@
     }
 </script>
 
+<script>
+    // 初始視窗中心位置
+    var center_height = show_map_vertical_length * 100;
+    var center_width = show_map_horizontal_length * 100;
+    $("#center").css("height", center_height);
+    $("#center").css("width", center_width);
+    // 計算視窗中心外邊距，以達成視窗左右平分
+    var center_margin_left = $("#center").css("margin-left");
+    $("#start").css("margin-left", center_margin_left);
+    $("#right").css("margin-left", center_margin_left);
+    $("#left").css("margin-left", center_margin_left);
+    $("#top").css("margin-left", center_margin_left);
+    $("#down").css("margin-left", center_margin_left);
 
-</body>
+    // 更動視窗重新計算，中心點外邊距。以達成視窗左右平分
+    $(window).resize(function () {
+        center_margin_left = $("#center").css("margin-left");
+        $("#start").css("margin-left", center_margin_left);
+        $("#right").css("margin-left", center_margin_left);
+        $("#left").css("margin-left", center_margin_left);
+        $("#top").css("margin-left", center_margin_left);
+        $("#down").css("margin-left", center_margin_left);
+    });
+
+</script>
 </html>
