@@ -269,18 +269,22 @@
                     coordinate["new_horizontal"] = photo_horizontal - 1; // 陣列向左移動
                     coordinate["place_direction"] = "left";
                     console.log("左-> " + coordinate["new_vertical"] + "," + coordinate["new_horizontal"]);
-                    //
-                    //
-                    // var photo_vertical_range = photo_coordinate(coordinate["new_vertical"], photo_block_vertical_height, map_vertical);
-                    var photo_horizontal_range =
-                        photo_coordinate( coordinate["new_horizontal"], photo_block_horizontal_width, map_horizontal);
 
-                    // console.log("上,start=> "+photo_vertical_range["start"]);
-                    // console.log("下,end=> "+photo_vertical_range["end"]);
-                    console.log("yan");
-                    console.log("左,start=> "+photo_horizontal_range["start"]);
-                    console.log("右,end=> "+photo_horizontal_range["end"]);
-                    console.log(" ");
+                    var photo_vertical_range =
+                        photo_coordinate(coordinate["new_vertical"], photo_block_vertical_height, map_vertical);
+                    var photo_horizontal_range =
+                        photo_coordinate(coordinate["new_horizontal"], photo_block_horizontal_width, map_horizontal);
+
+                    var h = 0;
+                    if (parseInt(photo_horizontal_range["start"]) > 0) {
+                        h = parseInt(photo_horizontal_range["start"]) - 1;
+                    }
+                    console.log("h-> " + h);
+                    console.log("上,左=> " + photo_vertical_range["start"] + "," + h);
+                    console.log("下,左=> " + photo_vertical_range["end"] + "," + h);
+                    // console.log("h-> " + h);
+                    // console.log("上,左=> " + photo_vertical_range["start"] + "," + h);
+                    // console.log("下,左=> " + photo_vertical_range["end"] + "," + h);
 
                     //
                 } else {
@@ -292,6 +296,19 @@
                     coordinate["new_vertical"] = photo_vertical - 1;// 陣列向上移動
                     coordinate["place_direction"] = "top";
                     console.log("上-> " + coordinate["new_vertical"] + "," + coordinate["new_horizontal"]);
+                    var photo_vertical_range =
+                        photo_coordinate(coordinate["new_vertical"], photo_block_vertical_height, map_vertical);
+                    var photo_horizontal_range =
+                        photo_coordinate(coordinate["new_horizontal"], photo_block_horizontal_width, map_horizontal);
+
+                    var v = 0;
+                    if (parseInt(photo_vertical_range["start"]) > 0) {
+                        v = parseInt(photo_vertical_range["start"]) - 1;
+
+                    }
+                    console.log("上,左=> " + v + "," + photo_horizontal_range["start"]);
+                    console.log("上,右=> " + v + "," + photo_horizontal_range["end"]);
+
 
                 } else {
                     coordinate = null;
@@ -303,6 +320,20 @@
                     coordinate["new_horizontal"] = photo_horizontal + 1;// 陣列向右移動
                     coordinate["place_direction"] = "right";
                     console.log("右-> " + coordinate["new_vertical"] + "," + coordinate["new_horizontal"]);
+                    var photo_vertical_range =
+                        photo_coordinate(coordinate["new_vertical"], photo_block_vertical_height, map_vertical);
+                    var photo_horizontal_range =
+                        photo_coordinate(coordinate["new_horizontal"], photo_block_horizontal_width, map_horizontal);
+
+
+                    var h = map_horizontal - 1;
+                    if (parseInt(photo_horizontal_range["end"]) < h) {
+                        h = parseInt(photo_horizontal_range["end"]) + 1;
+                    }
+
+                    console.log("上,右=> " + photo_vertical_range["start"] + "," + h);
+                    console.log("下,右=> " + photo_vertical_range["end"] + "," + h);
+
 
                 } else {
                     coordinate = null;
@@ -313,13 +344,27 @@
                     coordinate ["new_vertical"] = photo_vertical + 1;// 陣列向下移動
                     coordinate ["place_direction"] = "down";
                     console.log("下-> " + coordinate["new_vertical"] + "," + coordinate["new_horizontal"]);
+                    var photo_vertical_range =
+                        photo_coordinate(coordinate["new_vertical"], photo_block_vertical_height, map_vertical);
+                    var photo_horizontal_range =
+                        photo_coordinate(coordinate["new_horizontal"], photo_block_horizontal_width, map_horizontal);
+
+
+                    var v = map_vertical - 1;
+
+                    if (parseInt(photo_vertical_range["end"]) < v) {
+                        v = parseInt(photo_vertical_range["end"]) + 1;
+                    }
+                    console.log("下,左=> " + v + "," + photo_horizontal_range["start"]);
+                    console.log("下,右=> " + v + "," + photo_horizontal_range["end"]);
+
 
                 } else {
                     coordinate = null;
                 }
                 break;
         }//switch
-
+        console.log(" ");
         return coordinate;
 
     } // move
@@ -327,6 +372,15 @@
     // 判斷是否通行
     function pass(map, new_vertical, new_horizontal, place_direction, old_vertical, old_horizontal) {
 
+        // var photo_vertical_range =
+        //     photo_coordinate(new_vertical, photo_block_vertical_height, map_vertical);
+        // var photo_horizontal_range =
+        //     photo_coordinate(new_horizontal, photo_block_horizontal_width, map_horizontal);
+
+        // console.log("上,左=> " + photo_vertical_range["start"] + "," + photo_horizontal_range["start"]);
+        // console.log("上,右=> " + photo_vertical_range["start"] + "," + photo_horizontal_range["end"]);
+        // console.log("下,左=> " + photo_vertical_range["end"] + "," + photo_horizontal_range["start"]);
+        // console.log("下,右=> " + photo_vertical_range["end"] + "," + photo_horizontal_range["end"]);
 
         //
         // var photo_vertical_range = photo_coordinate(new_vertical, photo_block_vertical_height, map_vertical);
