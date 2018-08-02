@@ -10,10 +10,19 @@
             crossorigin="anonymous"></script>
     <style type="text/css">
 
+        /*大圖片*/
+        .new_photo {
+            position: absolute;
+            z-index: 10;
+            display: inline;
+            height: 400px;
+            width: 300px;
+        }
+
         /*圖片*/
         .photo {
             position: absolute;
-            z-index: 10;
+            z-index: 5;
             display: inline;
         }
 
@@ -48,11 +57,12 @@
 <div id="center" class="center">
     <div id="map" class="map"></div>
     <!--圖片-->
-    <img id="start" class="photo" src="photo/start.jpg">
-    <img id="top" class="photo" src="photo/top.png" style="display: none">
-    <img id="down" class="photo" src="photo/down.png" style="display: none">
-    <img id="left" class="photo" src="photo/left.png" style="display: none">
-    <img id="right" class="photo" src="photo/right.png" style="display: none">
+    <img id="new_start" class="new_photo" src="photo/new_start.png">
+    <!--<img id="start" class="photo" src="photo/start.jpg">-->
+    <!--<img id="top" class="photo" src="photo/top.png" style="display: none">-->
+    <!--<img id="down" class="photo" src="photo/down.png" style="display: none">-->
+    <!--<img id="left" class="photo" src="photo/left.png" style="display: none">-->
+    <!--<img id="right" class="photo" src="photo/right.png" style="display: none">-->
 </div>
 
 </body>
@@ -105,23 +115,66 @@
     var map_horizontal = map[map.length - 1].length;// 列
     var show_map_vertical_length = 8; // 顯示垂直長度
     var show_map_horizontal_length = 8; // 顯示水平長度
-    var photo_vertical = 6;//3 圖片初始位置 陣列 欄
-    var photo_horizontal = 6;//6 圖片初始位置 陣列 列
-    var block_vertical_height = 50; // 初始每一個地圖的高度
-    var block_horizontal_width = 50; // 初始每一個地圖的寬度
-    $(".pass").css("height", block_vertical_height + "px");
-    $(".pass").css("width", block_horizontal_width + "px");
-    $(".obstacle").css("height", block_vertical_height + "px");
-    $(".obstacle").css("width", block_horizontal_width + "px");
+    var photo_vertical = 4;//3 圖片初始位置 陣列 欄
+    var photo_horizontal = 3;//6 圖片初始位置 陣列 列
+    var block_vertical_height = 100; // 初始每一個地圖的高度
+    var block_horizontal_width = 100; // 初始每一個地圖的寬度
     //
     $(".photo").css("height", block_vertical_height + "px");
     $(".photo").css("width", block_horizontal_width + "px");
     //
-
+    //
     // 初始地圖
     $("#map").css("height", show_map_vertical_length * block_vertical_height + "px");// 透過陣列 橫 得知地圖最大高度範圍
     $("#map").css("width", show_map_horizontal_length * block_horizontal_width + "px");//透過陣列 列 得知地圖最大長度範圍
 
+    //
+    var photo_vertical_length = Math.ceil($("#new_start").css("height").replace(/[^0-9]/ig, ""));
+    var photo_horizontal_length = Math.ceil($("#new_start").css("width").replace(/[^0-9]/ig, ""));
+    // 計算圖片暫用多少地圖block
+    var photo_block_vertical_height = photo_vertical_length / block_vertical_height;
+    var photo_block_horizontal_width = photo_horizontal_length / block_horizontal_width;
+    //
+    // 已知 中心點
+    var photo_center_vertical = photo_vertical;
+    var photo_center_horizontal = photo_horizontal;
+    console.log(photo_center_vertical + "," + photo_center_horizontal);
+    // 計算圖片四個角座標位置 (left,top) (left,down),(right,top),(right,down)
+    // ==============================================================================
+    // V
+    var photo_vertical_top = photo_center_vertical - (Math.floor(photo_block_vertical_height / 2));//ok
+    // 修正不超過邊界
+    if (photo_vertical_top < 0) {
+        photo_vertical_top = 0;
+    }
+    var photo_vertical_down = photo_vertical_top + photo_block_vertical_height - 1;
+    if (photo_vertical_down >= show_map_vertical_length) {
+        photo_vertical_top = show_map_vertical_length - photo_block_vertical_height;
+        photo_vertical_down = photo_vertical_top + photo_block_vertical_height - 1;
+    }
+    // ==============================================================================
+
+    // H
+    var photo_horizontal_left = photo_center_horizontal - (Math.floor(photo_block_horizontal_width / 2));//ok
+    // 修正不超過邊界
+    if (photo_horizontal_left < 0) {
+        photo_horizontal_left = 0;
+        console.log("T");
+    }
+    var photo_horizontal_right = photo_horizontal_left + photo_block_horizontal_width - 1;
+    if (photo_horizontal_right >= show_map_horizontal_length) {
+        photo_horizontal_left = show_map_horizontal_length - photo_block_horizontal_width;
+        photo_horizontal_right = photo_horizontal_left + photo_block_horizontal_width - 1;
+    }
+
+    // ==============================================================================
+
+    //
+    console.log(" ");
+    console.log("上,左 " + photo_vertical_top + "," + photo_horizontal_left);
+    console.log("上,右 " + photo_vertical_top + "," + photo_horizontal_right);
+    console.log("下,左 " + photo_vertical_down + "," + photo_horizontal_left);
+    console.log("下,右 " + photo_vertical_down + "," + photo_horizontal_right);
 
     var draw_photo =
         draw_print(
@@ -134,6 +187,10 @@
             show_map_horizontal_length,
             block_vertical_height,
             block_vertical_height);
+
+    $("#new_start").css("top", photo_vertical_top * block_vertical_height);
+    $("#new_start").css("left", photo_horizontal_left * block_horizontal_width);
+
     //
     var define_vertical = photo_move_range(
         draw_photo["photo_vertical_start"],
@@ -146,6 +203,23 @@
         draw_photo["photo_horizontal_end"],
         draw_photo["horizontal_range"],
         draw_photo["map_horizontal"]);
+
+    console.log(
+        "v,"+
+        draw_photo["photo_vertical_start"] + "," +
+        draw_photo["photo_vertical_end"] + "," +
+        draw_photo["vertical_range"] + "," +
+        draw_photo["map_vertical"]
+    );
+    console.log(" ");
+    console.log(
+        "h,"+
+        draw_photo["photo_horizontal_start"] + "," +
+        draw_photo["photo_horizontal_end"] + "," +
+        draw_photo["horizontal_range"] + "," +
+        draw_photo["map_horizontal"]
+    );
+
 
     show_photo_move(define_vertical, define_horizontal, "start");
 
@@ -183,7 +257,6 @@
             photo_vertical = direction.now_vertical;
             photo_horizontal = direction.now_horizontal;
             //
-            console.log(photo_vertical + "," + photo_horizontal);
             var draw_photo =
                 draw_print(
                     map,
@@ -195,6 +268,22 @@
                     show_map_horizontal_length,
                     block_vertical_height,
                     block_horizontal_width);
+
+            // console.log(
+            //     "v,"+
+            //     draw_photo["photo_vertical_start"] + "," +
+            //     draw_photo["photo_vertical_end"] + "," +
+            //     draw_photo["vertical_range"] + "," +
+            //     draw_photo["map_vertical"]
+            // );
+            // console.log(" ");
+            // console.log(
+            //     "h,"+
+            //     draw_photo["photo_horizontal_start"] + "," +
+            //     draw_photo["photo_horizontal_end"] + "," +
+            //     draw_photo["horizontal_range"] + "," +
+            //     draw_photo["map_horizontal"]
+            // );
             var top = photo_move_range(
                 draw_photo["photo_vertical_start"],
                 draw_photo["photo_vertical_end"],
@@ -363,9 +452,9 @@
 
     function show_photo_move(top, left, direction) {
 
-        $("#start,#top,#down,#left,#right").css("top", top * block_vertical_height);
-        $("#start,#top,#down,#left,#right").css("left", left * block_horizontal_width);
-        $("#start,#top,#down,#left,#right").css("display", "none");
+        // $("#start,#top,#down,#left,#right").css("top", top * block_vertical_height);
+        // $("#start,#top,#down,#left,#right").css("left", left * block_horizontal_width);
+        // $("#start,#top,#down,#left,#right").css("display", "none");
 
         switch (direction) {
             case "top":
@@ -385,7 +474,9 @@
                 break;
         }
     }
+
 </script>
+
 
 <script>
     // 初始視窗中心位置
@@ -395,6 +486,8 @@
     $("#center").css("width", center_width);
     // 計算視窗中心外邊距，以達成視窗左右平分
     var center_margin_left = $("#center").css("margin-left");
+    $("#new_start").css("margin-left", center_margin_left);
+    //
     $("#start").css("margin-left", center_margin_left);
     $("#right").css("margin-left", center_margin_left);
     $("#left").css("margin-left", center_margin_left);
@@ -404,13 +497,15 @@
     // 更動視窗重新計算，中心點外邊距。以達成視窗左右平分
     $(window).resize(function () {
         center_margin_left = $("#center").css("margin-left");
+        $("#new_start").css("margin-left", center_margin_left);
+//
         $("#start").css("margin-left", center_margin_left);
         $("#right").css("margin-left", center_margin_left);
         $("#left").css("margin-left", center_margin_left);
         $("#top").css("margin-left", center_margin_left);
         $("#down").css("margin-left", center_margin_left);
     });
-
-
 </script>
+
+
 </html>
