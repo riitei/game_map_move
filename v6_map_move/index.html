@@ -8,6 +8,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"
             integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
             crossorigin="anonymous"></script>
+
     <style type="text/css">
 
         /*圖片*/
@@ -15,7 +16,7 @@
             position: absolute;
             z-index: 5;
             display: inline;
-            height: 60px;
+            height: 100px;
             width: 40px;
         }
 
@@ -42,6 +43,16 @@
             margin: auto;
         }
 
+        .dialog{
+            top: 100px;
+            left: 100px;
+            position: absolute;
+            z-index: 20;
+            background: lightskyblue;
+            height: 100px;
+            width: 400px;
+            display: none;
+        }
     </style>
 
 </head>
@@ -55,9 +66,12 @@
     <img id="down" class="photo" src="photo/down.png" style="display: none">
     <img id="left" class="photo" src="photo/left.png" style="display: none">
     <img id="right" class="photo" src="photo/right.png" style="display: none">
+    <div id="dialog" class="dialog"></div>
+
 </div>
 
 <!--</div>-->
+
 
 </body>
 <script type="text/javascript">
@@ -89,9 +103,9 @@
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0],
-        [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0],
+        [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0],
+        [0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0],
@@ -108,8 +122,8 @@
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0]];
     // map陣列值為 0 可以圖片通行
     // map陣列值為 1 可以圖片通行
-    var map_vertical = map.length;// 欄
-    var map_horizontal = map[map.length - 1].length;// 列
+    var all_map_vertical_length = map.length;// 欄
+    var all_map_horizontal_length = map[map.length - 1].length;// 列
     var show_map_vertical_length = 8; // 顯示垂直長度
     var show_map_horizontal_length = 8; // 顯示水平長度
 
@@ -142,8 +156,8 @@
             map,
             photo_center_vertical,
             photo_center_horizontal,
-            map_vertical,
-            map_horizontal,
+            all_map_vertical_length,
+            all_map_horizontal_length,
             show_map_vertical_length,
             show_map_horizontal_length,
             block_vertical_height,
@@ -151,10 +165,11 @@
     //
     show_photo_move(photo_center_vertical, photo_center_horizontal,
         photo_block_vertical_height, photo_block_horizontal_width,
-        map_vertical, map_horizontal,
+        all_map_vertical_length, all_map_horizontal_length,
         draw_photo["map_vertical_start"], draw_photo["map_horizontal_start"],
         "start");
     // 鍵盤出發圖片在地圖移動方向
+
     $(document).keydown(function (event) {
         //
         var move_place;
@@ -164,26 +179,26 @@
                 move_place =
                     move("left",
                         photo_center_vertical, photo_center_horizontal,
-                        map_vertical, map_horizontal,
+                        all_map_vertical_length, all_map_horizontal_length,
                         photo_block_vertical_height, photo_block_horizontal_width);
                 break;
             case 38:// 鍵盤 上按鍵
                 move_place =
                     move("top",
                         photo_center_vertical, photo_center_horizontal,
-                        map_vertical, map_horizontal,
+                        all_map_vertical_length, all_map_horizontal_length,
                         photo_block_vertical_height, photo_block_horizontal_width);
                 break;
             case 39:// 鍵盤 右按鍵
                 move_place = move("right",
                     photo_center_vertical, photo_center_horizontal,
-                    map_vertical, map_horizontal,
+                    all_map_vertical_length, all_map_horizontal_length,
                     photo_block_vertical_height, photo_block_horizontal_width);
                 break;
             case 40:// 鍵盤 下按鍵
                 move_place = move("down",
                     photo_center_vertical, photo_center_horizontal,
-                    map_vertical, map_horizontal,
+                    all_map_vertical_length, all_map_horizontal_length,
                     photo_block_vertical_height, photo_block_horizontal_width);
                 break;
             default:
@@ -196,13 +211,12 @@
                 map,
                 move_place["new_vertical"],
                 move_place["new_horizontal"],
-                move_place["place_direction"],
                 move_place["old_vertical"],
                 move_place["old_horizontal"],
-                move_place["photo_vertical_start"],
-                move_place["photo_vertical_end"],
-                move_place["photo_horizontal_start"],
-                move_place["photo_horizontal_end"]
+                photo_block_vertical_height,
+                photo_block_horizontal_width,
+                all_map_vertical_length,
+                all_map_horizontal_length
             );
             photo_center_vertical = direction.now_vertical;
             photo_center_horizontal = direction.now_horizontal;
@@ -213,8 +227,8 @@
                     map,
                     photo_center_vertical,
                     photo_center_horizontal,
-                    map_vertical,
-                    map_horizontal,
+                    all_map_vertical_length,
+                    all_map_horizontal_length,
                     show_map_vertical_length,
                     show_map_horizontal_length,
                     block_vertical_height,
@@ -222,17 +236,17 @@
             // 算圖片座標
             show_photo_move(photo_center_vertical, photo_center_horizontal,
                 photo_block_vertical_height, photo_block_horizontal_width,
-                map_vertical, map_horizontal,
+                all_map_vertical_length, all_map_horizontal_length,
                 draw_photo["map_vertical_start"], draw_photo["map_horizontal_start"],
                 move_place["place_direction"]);
 
         }
-
     });// key
+
 
     // 圖片移動是否超出界線
     function move(
-        direction, photo_vertical, photo_horizontal, map_vertical, map_horizontal,
+        direction, photo_vertical, photo_horizontal, all_map_vertical_length, all_map_horizontal_length,
         photo_block_vertical_height, photo_block_horizontal_width
     ) {
         var coordinate = new Array();
@@ -244,74 +258,42 @@
         coordinate["new_horizontal"] = photo_horizontal;
 
         var photo_vertical_range =
-            photo_coordinate(coordinate["new_vertical"], photo_block_vertical_height, map_vertical);
+            photo_coordinate(coordinate["new_vertical"], photo_block_vertical_height, all_map_vertical_length);
         var photo_horizontal_range =
-            photo_coordinate(coordinate["new_horizontal"], photo_block_horizontal_width, map_horizontal);
+            photo_coordinate(coordinate["new_horizontal"], photo_block_horizontal_width, all_map_horizontal_length);
 
         switch (direction) {
             case "left":
                 if (photo_horizontal_range["start"] > 0) { // 防止超過界線
                     coordinate["new_horizontal"] = photo_horizontal - 1; // 陣列向左移動
                     coordinate["place_direction"] = "left";
-                    var photo_vertical_range =
-                        photo_coordinate(coordinate["new_vertical"], photo_block_vertical_height, map_vertical);
-                    var photo_horizontal_range =
-                        photo_coordinate(coordinate["new_horizontal"], photo_block_horizontal_width, map_horizontal);
-                    coordinate["photo_vertical_start"] = photo_vertical_range["start"];
-                    coordinate["photo_vertical_end"] = photo_vertical_range["end"];
-                    coordinate["photo_horizontal_start"] = photo_horizontal_range["start"];
-                    coordinate["photo_horizontal_end"] = coordinate["photo_horizontal_start"];
                 } else {
-                    coordinate = null;
+                    coordinate = null; // 地圖邊界外設為空值
                 }
                 break;
             case "top":
                 if (photo_vertical_range["start"] > 0) { // 防止超過界線
                     coordinate["new_vertical"] = photo_vertical - 1;// 陣列向上移動
                     coordinate["place_direction"] = "top";
-                    var photo_vertical_range =
-                        photo_coordinate(coordinate["new_vertical"], photo_block_vertical_height, map_vertical);
-                    var photo_horizontal_range =
-                        photo_coordinate(coordinate["new_horizontal"], photo_block_horizontal_width, map_horizontal);
-                    coordinate["photo_vertical_start"] = photo_vertical_range["start"];
-                    coordinate["photo_vertical_end"] = coordinate["photo_vertical_start"];
-                    coordinate["photo_horizontal_start"] = photo_horizontal_range["start"];
-                    coordinate["photo_horizontal_end"] = photo_horizontal_range["end"];
                 } else {
-                    coordinate = null;
+                    coordinate = null; // 地圖邊界外設為空值
                 }
                 break;
             case"right":
 
-                if (photo_horizontal_range["end"] < map_horizontal - 1) { // 防止超過界線
+                if (photo_horizontal_range["end"] < all_map_horizontal_length - 1) { // 防止超過界線
                     coordinate["new_horizontal"] = photo_horizontal + 1;// 陣列向右移動
                     coordinate["place_direction"] = "right";
-                    var photo_vertical_range =
-                        photo_coordinate(coordinate["new_vertical"], photo_block_vertical_height, map_vertical);
-                    var photo_horizontal_range =
-                        photo_coordinate(coordinate["new_horizontal"], photo_block_horizontal_width, map_horizontal);
-                    coordinate["photo_vertical_start"] = photo_vertical_range["start"];
-                    coordinate["photo_vertical_end"] = photo_vertical_range["end"];
-                    coordinate["photo_horizontal_start"] = photo_horizontal_range["end"];
-                    coordinate["photo_horizontal_end"] = coordinate["photo_horizontal_start"];
                 } else {
-                    coordinate = null;
+                    coordinate = null; // 地圖邊界外設為空值
                 }
                 break;
             case"down":
-                if (photo_vertical_range["end"] < map_vertical - 1) { // 防止超過界線
+                if (photo_vertical_range["end"] < all_map_vertical_length - 1) { // 防止超過界線
                     coordinate ["new_vertical"] = photo_vertical + 1;// 陣列向下移動
                     coordinate ["place_direction"] = "down";
-                    var photo_vertical_range =
-                        photo_coordinate(coordinate["new_vertical"], photo_block_vertical_height, map_vertical);
-                    var photo_horizontal_range =
-                        photo_coordinate(coordinate["new_horizontal"], photo_block_horizontal_width, map_horizontal);
-                    coordinate["photo_vertical_start"] = photo_vertical_range["end"];
-                    coordinate["photo_vertical_end"] = coordinate["photo_vertical_start"];
-                    coordinate["photo_horizontal_start"] = photo_horizontal_range["start"];
-                    coordinate["photo_horizontal_end"] = photo_horizontal_range["end"];
                 } else {
-                    coordinate = null;
+                    coordinate = null; // 地圖邊界外設為空值
                 }
                 break;
         }//switch
@@ -322,19 +304,35 @@
 
     // 判斷是否通行
     function pass(
-        map, new_vertical, new_horizontal, place_direction, old_vertical, old_horizontal,
-        photo_vertical_start, photo_vertical_end, photo_horizontal_start, photo_horizontal_end
+        map, new_vertical, new_horizontal, old_vertical, old_horizontal,
+        photo_block_vertical_height, photo_block_horizontal_width,
+        all_map_vertical_length, all_map_horizontal_length
     ) {
         var now_vertical = new_vertical;
         var now_horizontal = new_horizontal;
-        for (var v = photo_vertical_start; v <= photo_vertical_end; v++) {
-            for (var h = photo_horizontal_start; h <= photo_horizontal_end; h++) {
+
+        var photo_vertical_range =
+            photo_coordinate(new_vertical, photo_block_vertical_height, all_map_vertical_length);
+        var photo_horizontal_range =
+            photo_coordinate(new_horizontal, photo_block_horizontal_width, all_map_horizontal_length);
+
+
+        for (var v = photo_vertical_range["start"]; v <= photo_vertical_range["end"]; v++) {
+            for (var h = photo_horizontal_range["start"]; h <= photo_horizontal_range["end"]; h++) {
+                console.log("0=> " + v + "," + h);
 
                 if (map[v][h] == 1) { // 不可通行
-                    // 存放未移動座標位置
+                    // 存放未移動舊座標位置
                     now_vertical = old_vertical;
                     now_horizontal = old_horizontal;
                     break;
+                }
+                if (map[v][h] > 1) {
+                    // 存放未移動舊座標位置
+
+                    now_vertical = old_vertical;
+                    now_horizontal = old_horizontal;
+                    // break;
                 }
             }
         }
@@ -363,7 +361,7 @@
     function draw_print(
         map,
         photo_vertical, photo_horizontal,
-        map_vertical, map_horizontal,
+        all_map_vertical_length, all_map_horizontal_length,
         show_map_vertical_length, show_map_horizontal_length,
         block_vertical_height, block_horizontal_width
     ) {
@@ -379,16 +377,16 @@
             map_vertical_start = 0;
         }
         // 下面
-        if (map_vertical_start > map_vertical - show_map_vertical_length) {
-            map_vertical_start = map_vertical - show_map_vertical_length;
+        if (map_vertical_start > all_map_vertical_length - show_map_vertical_length) {
+            map_vertical_start = all_map_vertical_length - show_map_vertical_length;
         }
         // 左面
         if (map_horizontal_start < 0) {
             map_horizontal_start = 0;
         }
         // 右面
-        if (map_horizontal_start > map_horizontal - show_map_horizontal_length) {// 右面
-            map_horizontal_start = map_horizontal - show_map_horizontal_length;
+        if (map_horizontal_start > all_map_horizontal_length - show_map_horizontal_length) {// 右面
+            map_horizontal_start = all_map_horizontal_length - show_map_horizontal_length;
         }
         //
 
@@ -398,11 +396,11 @@
         //
         for (var i = map_vertical_start; i <= map_vertical_end; i++) {
             for (var j = map_horizontal_start; j <= map_horizontal_end; j++) {
-                if (map[i][j] == 1) {
-                    $("#map").append("<div class='obstacle'>" + i + "," + j + "</div>");
+                if (map[i][j] > 0) {
+                    $("#map").append("<div id='block" + i + "," + j + "' class='obstacle'>" + i + "," + j + "</div>");
                     // 障礙物
                 } else {
-                    $("#map").append("<div class='pass'>" + i + "," + j + "</div>");
+                    $("#map").append("<div id='block" + i + "," + j + "' class='pass'>" + i + "," + j + "</div>");
                     // 可通行
                 }
             }
@@ -423,8 +421,8 @@
             "map_horizontal_end": map_horizontal_end,
             "vertical_range": vertical_range,
             "horizontal_range": horizontal_range,
-            "map_vertical": map_vertical,
-            "map_horizontal": map_horizontal
+            "map_vertical": all_map_vertical_length,
+            "map_horizontal": all_map_horizontal_length
         };
     }
 
@@ -432,13 +430,13 @@
     function show_photo_move(
         photo_center_vertical, photo_center_horizontal,
         photo_block_vertical_height, photo_block_horizontal_width,
-        map_vertical, map_horizontal,
+        all_map_vertical_length, all_map_horizontal_length,
         map_vertical_start, map_horizontal_start,
         direction) {
         console.log(direction);
 
-        var photo_vertical = photo_coordinate(photo_center_vertical, photo_block_vertical_height, map_vertical);
-        var photo_horizontal = photo_coordinate(photo_center_horizontal, photo_block_horizontal_width, map_horizontal);
+        var photo_vertical = photo_coordinate(photo_center_vertical, photo_block_vertical_height, all_map_vertical_length);
+        var photo_horizontal = photo_coordinate(photo_center_horizontal, photo_block_horizontal_width, all_map_horizontal_length);
 
         var top_range = photo_vertical["start"] - Math.abs(map_vertical_start);
         var left_range = photo_horizontal["start"] - Math.abs(map_horizontal_start);
@@ -493,6 +491,5 @@
         $("#down").css("margin-left", center_margin_left);
     });
 </script>
-
 
 </html>
