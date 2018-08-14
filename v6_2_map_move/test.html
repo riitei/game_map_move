@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+    <title>Title</title>
+</head>
+<style type="text/css">
+    .photo {
+        background-color: rebeccapurple;
+        width: 100px;
+        height: 100px;
+    }
+
+</style>
+<body>
+<div id="ans" style="display: inline">aa</div>
+<script>
+
+    $(document).ready(function () {
+
+        var v = 0;
+
+        $(document).keydown( function (event) {
+
+            // switch (event.which) {
+            //     case 38:// 鍵盤 上按鍵
+            //         v = v - 1;
+            //         break;
+            //     case 40:// 鍵盤 下按鍵
+            //         v = v + 1;
+            //         break;
+            //     default:
+            //         break;
+            // }
+
+            $("#ans").empty();
+            $("#ans").append(v);
+            console.log("in-> " + v);
+            test(v);
+        });// keydown
+        // console.log("out " + $("#ans").text());
+        console.log("yan");
+
+        // history.go(0);
+        function test() {
+            console.log("test" + v);
+        }
+    });// jquery
+
+
+</script>
+</body>
+</html>
