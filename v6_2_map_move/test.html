@@ -1,54 +1,28 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
-    <title>Title</title>
-</head>
-<style type="text/css">
-    .photo {
-        background-color: rebeccapurple;
-        width: 100px;
-        height: 100px;
-    }
-
-</style>
+<html>
 <body>
-<div id="ans" style="display: inline">aa</div>
+
+<p>Image to use:</p>
+<img id="scream" src="photo/backgrounp.jpg" alt="The Scream" >
+
+
+
+<canvas id="myCanvas" style="border:1px solid #d3d3d3;"></canvas>
+
+
 <script>
+    window.onload = function() {
+        var c = document.getElementById("myCanvas");
+        var ctx = c.getContext("2d");
+        console.log(ctx);
+        var img = document.getElementById("scream");
+        ctx.drawImage(img, 120, 0, 100, 100, 0, 0, 100, 100);
+        // ctx.drawImage(img, 0, 0, 100, 100);
 
-    $(document).ready(function () {
-
-        var v = 0;
-
-        $(document).keydown( function (event) {
-
-            // switch (event.which) {
-            //     case 38:// 鍵盤 上按鍵
-            //         v = v - 1;
-            //         break;
-            //     case 40:// 鍵盤 下按鍵
-            //         v = v + 1;
-            //         break;
-            //     default:
-            //         break;
-            // }
-
-            $("#ans").empty();
-            $("#ans").append(v);
-            console.log("in-> " + v);
-            test(v);
-        });// keydown
-        // console.log("out " + $("#ans").text());
-        console.log("yan");
-
-        // history.go(0);
-        function test() {
-            console.log("test" + v);
-        }
-    });// jquery
-
-
+    };
 </script>
+
+
+
 </body>
 </html>

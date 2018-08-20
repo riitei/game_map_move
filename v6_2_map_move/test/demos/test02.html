@@ -1,0 +1,218 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ru">
+<head>
+     <title></title>
+     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <style type="text/css">
+        .line{
+              display:none;
+              z-index:1;
+              left:0;
+              top:0;
+              position:absolute;
+        }
+        #line1{
+              display:block;
+        }
+        .container{
+              position:relative;
+              width:564px;
+              height:294px;
+              overflow:hidden;
+        }
+        .border{
+              border:5px solid #000;
+        }
+        .corner{
+              position:absolute;
+              width:282px;
+              height:147px;
+              background:#ccc;
+              overflow:hidden;
+        }
+        .leftTop,.inLeftTop{
+              position:absolute;
+              left:0;
+              top:0;
+              right:auto;
+              bottom:auto;
+        }
+        .rightTop,.inRightTop{
+              position:absolute;
+              right:0;
+              top:0;
+              left:auto;
+              bottom:auto;
+        }
+        .rightBottom,.inRightBottom{
+              position:absolute;
+              right:0;
+              bottom:0;
+              top:auto;
+              left:auto;
+        }
+        .leftBottom,.inLeftBottom{
+              position:absolute;
+              left:0;
+              bottom:0;
+              top:auto;
+              right:auto;
+        }
+    </style>
+</head>
+<body>
+<script src="jquery-1.6.2.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+    function crossLine(container,option,callback){
+        var lineX=$("<div style='width:2000px;height:4px;overflow:hidden;position:absolute;background:#FACC41;left:0;top:0;z-index:1'></div>");
+        var lineY=$("<div style='width:4px;height:2000px;overflow:hidden;position:absolute;background:#FACC41;left:0;top:0;z-index:1'></div>");
+        var _option={
+            "display":"none",
+            "targetPosX":container.width()/2-2,
+            "targetPosY":container.height()/2-2,
+            "time":500,
+            "freq":10
+        };
+        $.extend(_option,option);
+        option=_option;
+        var targetPosX=option.targetPosX;
+        var targetPosY=option.targetPosY;
+        var time=option.time;
+        var freq=option.freq;
+        times=time/freq;
+        container.append(lineX).append(lineY);
+//开始运动
+        var lxt=lineX.position().top;
+        var lyl=lineY.position().left;
+        xPerTime=targetPosX/times;
+        yPerTime=targetPosY/times;
+        var count=0;
+        var si=setInterval(function(){
+            count++;
+            if(count>=times){
+                clearInterval(si);
+                if(typeof(callback)=="function"){
+                    callback();
+                }
+                if(option.display=="none"){
+                    lineX.remove();
+                    lineY.remove();
+                }
+            }
+            if(lxt+yPerTime<=targetPosY){
+                lxt += yPerTime;
+                lineX.css("top",lxt);
+            }else{
+                lxt=targetPosY;
+                lineX.css("top",targetPosY);
+            }
+            if(lyl+xPerTime<=targetPosX){
+                lyl += xPerTime;
+                lineY.css("left",lyl);
+            }else{
+                lyl=targetPosX;
+                lineY.css("left",targetPosX);
+            }
+        },freq);
+    }
+    function picSplit(line1,line2,container,option){
+//begin
+        line1.css("z-index",2);
+        /*
+        var targetX=282;
+        var targetY=147;
+        */
+        var _option={
+            "targetX":container.width()/2,
+            "targetY":container.height()/2,
+            "time":500,
+            "freq":10
+        };
+        $.extend(_option,option);
+        option=_option;
+        var targetX=option.targetX;
+        var targetY=option.targetY;
+        var containerWidth=container.width();
+        var containerHeight=container.height();
+        /*
+        *复制四个，放入四个容器，置于四角，然后移动
+        */
+//div0-4 容器，放置于四角
+        var div0=$("<div></div>").css({"position":"absolute","left":0,"top":0,"right":"auto","bottom":"auto","width":targetX,"height":targetY,"z-index":"2","overflow":"hidden"}).appendTo(container);
+        var div1=$("<div></div>").css({"position":"absolute","left":targetX,"top":0,"right":"auto","bottom":"auto","width":containerWidth-targetX,"height":targetY,"z-index":"2","overflow":"hidden"}).appendTo(container);
+        var div2=$("<div></div>").css({"position":"absolute","left":targetX,"top":targetY,"right":"auto","bottom":"auto","width":targetX,"height":containerHeight-targetY,"z-index":"2","overflow":"hidden"}).appendTo(container);
+        var div3=$("<div></div>").css({"position":"absolute","left":0,"top":targetY,"right":"auto","bottom":"auto","width":targetX,"height":containerHeight-targetY,"z-index":"2","overflow":"hidden"}).appendTo(container);
+//tempL0-4复制出来的层
+        var tempL0=line1.clone().css({"position":"absolute","left":0,"top":0,"right":"auto","bottom":"auto","z-index":"2"}).appendTo(div0);
+        var tempL1=line1.clone().css({"position":"absolute","left":-targetX,"top":0,"right":"auto","bottom":"auto","z-index":"2"}).appendTo(div1);
+        var tempL2=line1.clone().css({"position":"absolute","left":-targetX,"top":-targetY,"right":"auto","bottom":"auto","z-index":"2"}).appendTo(div2);
+        var tempL3=line1.clone().css({"position":"absolute","left":0,"top":-targetY,"right":"auto","bottom":"auto","z-index":"2"}).appendTo(div3);
+        line1.css("display","none");
+        line2.css("display","block");
+//开始运动
+        var time=option.time;
+        var freq=option.freq;
+        var times=time/freq;
+        var count=0;
+        var xLeftPerTime=3;
+        var xRightPerTime=3;
+        var yTopPerTime=3;
+        var yBottomPerTime=3;
+        var l0=div0.position().left;
+        var t0=div0.position().top;
+        var l1=div1.position().left;
+        var t1=div1.position().top;
+        var l2=div2.position().left;
+        var t2=div2.position().top;
+        var l3=div3.position().left;
+        var t3=div3.position().top;
+        var si=setInterval(function(){
+            count++;
+            if(count>=times){
+                clearInterval(si);
+                div0.remove();
+                div1.remove();
+                div2.remove();
+                div3.remove();
+            }
+            l0=l0-xLeftPerTime;
+            t0=t0-yTopPerTime;
+            l1=l1+xRightPerTime;
+            t1=t1-yTopPerTime;
+            l2=l2+xRightPerTime;
+            t2=t2+yBottomPerTime;
+            l3=l3-xLeftPerTime;
+            t3=t3+yBottomPerTime;
+            div0.css("left",(l0-xLeftPerTime)+"px");
+            div0.css("top",(t0-yTopPerTime)+"px");
+            div1.css("left",(l1+xRightPerTime)+"px");
+            div1.css("top",(t1-yTopPerTime)+"px");
+            div2.css("left",(l2+xRightPerTime)+"px");
+            div2.css("top",(t2+yBottomPerTime)+"px");
+            div3.css("left",(l3-xLeftPerTime)+"px");
+            div3.css("top",(t3+yBottomPerTime)+"px");
+        },freq);
+    }
+</script>
+<div class="container" id="container">
+    <div class="line" id="line1"><img src="http://static.house.sina.com.cn/apileju/cms/110819/1820432103.jpg" alt="" /></div>
+    <div class="line" id="line2"><img src="http://static.house.sina.com.cn/apileju/cms/110819/1110183294.jpg" alt="" /></div>
+</div>
+<input type="button" value="GO" onclick="javascript:go()" />
+<script type="text/javascript">
+    var line1=$("#line1");
+    var line2=$("#line2");
+    line1.css("display","block");
+    var container=$("#container");
+    function go(){
+        var option={"display":"none"};
+        crossLine(container,option,gopicSplit);
+    }
+    var container=$("#container");
+    function gopicSplit(){
+        picSplit(line1,line2,container);
+    }
+</script>
+</body>
+</html>
