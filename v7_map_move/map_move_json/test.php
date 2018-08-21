@@ -7,7 +7,7 @@
  */
 
 
-$file_path = $_SERVER["DOCUMENT_ROOT"] . "v6_2_map_move/map_move_json/map_move.json";
+$file_path = $_SERVER["DOCUMENT_ROOT"] . "v7_map_move/map_move_json/map.json";
 
 try {
     $json = json_decode(file_get_contents($file_path), true);

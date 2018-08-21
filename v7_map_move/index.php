@@ -20,7 +20,6 @@
             width: 20px;
         }
 
-
         /*以達成視窗左右平分*/
         .center {
             margin: auto;
@@ -42,9 +41,9 @@
     ?>
 </head>
 <body>
-<!--<div class="fixed-top">-->
+<div class="fixed-top">
 <div id="center" class="center">
-    <canvas id="show" width="400px" height="200px" ></canvas>
+    <canvas id="show"></canvas>
     <!--圖片-->
     <img id="start" class="photo" src="photo/start.jpg">
     <img id="top" class="photo" src="photo/top.png" style="display: none">
@@ -54,11 +53,12 @@
     <div id="dialog" class="dialog"></div>
 
 </div>
-<img id="img" src="map_move_json/map_move2.png" style="display: none">
+
+<img id="img" src="map_move_json/map.png" style="display: none">
 
 </div>
 
-<!--</div>-->
+</div>
 
 
 </body>
@@ -66,19 +66,24 @@
     var map = <?=json_encode($map)?>;
     var all_map_vertical_length = JSON.parse(<?=$height?>);
     var all_map_horizontal_length = JSON.parse(<?=$width?>);
-    var show_map_vertical_length = 10; // 顯示垂直長度
-    var show_map_horizontal_length = 10; // 顯示水平長度
+    var show_map_vertical_length = 80; // 顯示垂直長度
+    var show_map_horizontal_length = 80; // 顯示水平長度
 
 
     // 圖片 中心點
-    var photo_center_vertical = 5;//3 圖片初始位置 陣列 欄
-    var photo_center_horizontal = 5;//6 圖片初始位置 陣列 列
+    var photo_center_vertical = 50;//3 圖片初始位置 陣列 欄
+    var photo_center_horizontal = 80;//6 圖片初始位置 陣列 列
 
     var block_vertical_height = JSON.parse(<?=$tileheight?>); // 初始每一個地圖的高度
     var block_horizontal_width = JSON.parse(<?=$tilewidth?>); // 初始每一個地圖的寬度
     //
     // 初始地圖
-   // 不能寫
+    document.getElementById("show")
+        .setAttribute("height", all_map_vertical_length * block_vertical_height + "px");
+    document.getElementById("show")
+        .setAttribute("width", all_map_horizontal_length * block_horizontal_width + "px");
+
+    // 不能寫
 
     var photo_vertical_length = Math.ceil($("#start").css("height").replace(/[^0-9]/ig, ""));
     var photo_horizontal_length = Math.ceil($("#start").css("width").replace(/[^0-9]/ig, ""));
