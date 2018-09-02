@@ -1,43 +1,38 @@
 <!DOCTYPE html>
-<html>
-<body>
-<script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
 
-<p>Image to use:</p>
-<img id="scream" src="map_move_json/map_move2.png" style="display: block;">
+</head>
 
-
-<!--<canvas id="myCanvas" style="border:1px solid #d3d3d3;"></canvas>-->
-<canvas id="myCanvas" width="400px" height="200px"></canvas>
-
-<!--height="200px" width="400px"-->
 <script>
+    // if(window.name){
+    //     alert("第一次开这个窗口！name值"+ window.name);
+    //     window.name = 'lijia';
+    //
+    // }else{
+    //     alert('刷新操作 name值：'+ window.name);
+    // }
+    var isChange = false;
+    $(function () {
 
-    var c = document.getElementById("myCanvas");
-    var ctx = c.getContext("2d");
-    var img = document.getElementById("scream");
+        $("input,textarea,select").change(function () {
+            isChange = true;
+            $(this).addClass("editing");
+        });
 
-
-    // img,
-    // map_horizontal_start * block_horizontal_width, map_vertical_start * block_vertical_height,
-    // map_horizontal_end * block_horizontal_width, map_vertical_end * block_vertical_height,
-    // 0, 0,
-    // block_horizontal_width * show_map_horizontal_length, block_vertical_height * show_map_horizontal_length;
-    // ctx.drawImage(img,400,200);
-
-    ctx.drawImage(
-        img,
-        100, 0,
-        200, 200,
-        0, 0,
-        200, 200);
-
-
-    document.write($("#myCanvas").css("width"));
-    document.write($("#myCanvas").css("height"));
-
+        $(window).bind('beforeunload', function (e) {
+            if (isChange || $(".editing").get().length > 0) {
+                return '★資料尚未存檔，確定是否要離開？★';
+            }
+        })
+    });
 </script>
-
-
+　　
+<body>
+yanyan
 </body>
+
 </html>

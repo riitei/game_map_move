@@ -142,6 +142,7 @@
         }
 
     </style>
+
     <?php
     include "map_move_json/test.php";
 
@@ -252,13 +253,12 @@
 
 <script type="text/javascript">
 
-    // $(function () {
+
     var map = <?=json_encode($map)?>;
     var all_map_vertical_length = JSON.parse(<?=$height?>);
     var all_map_horizontal_length = JSON.parse(<?=$width?>);
     var show_map_vertical_length = 50; // 顯示垂直長度
     var show_map_horizontal_length = 50; // 顯示水平長度
-
 
     // 圖片 中心點
     var photo_center_vertical = 50;//3 圖片初始位置 陣列 欄
@@ -278,8 +278,11 @@
     var photo_horizontal_length = Math.ceil($("#start").css("width").replace(/[^0-9]/ig, ""));
     var meun_width = $("#menu").css("width").replace(/[^0-9]/ig, "");
     var map_width = $("#show").css("width").replace(/[^0-9]/ig, "");
+    var trajectory_status = "pass"; // 紀錄軌跡狀態
+    var trajectory = new Array();// 存放紀錄軌跡筆數
+    var trajectory_count = 0;// 計算紀錄筆數
+    var isChange = false;// 判斷是否重新整理
 
-    console.log(meun_width + map_width);
 
     $("#game").css("width", meun_width + map_width + "px");
     // 計算圖片暫用多少地圖block num
@@ -294,37 +297,6 @@
     var ctx = c.getContext("2d");
     var imageObj = new Image();
     imageObj.src = "map_move_json/map.png";
-    // // 計算顯示地圖起始坐標和結束座標
-    // var vertical_range = Math.floor(show_map_vertical_length / 2);
-    // var horizontal_range = Math.floor(show_map_horizontal_length / 2);
-    // //
-    // var map_vertical_start = photo_center_vertical - vertical_range;
-    // var map_horizontal_start = photo_center_horizontal - horizontal_range;
-    // // 上面
-    // if (map_vertical_start < 0) {
-    //     map_vertical_start = 0;
-    // }
-    // // 下面
-    // if (map_vertical_start > all_map_vertical_length - show_map_vertical_length) {
-    //     map_vertical_start = all_map_vertical_length - show_map_vertical_length;
-    // }
-    // // 左面
-    // if (map_horizontal_start < 0) {
-    //     map_horizontal_start = 0;
-    // }
-    // // 右面
-    // if (map_horizontal_start > all_map_horizontal_length - show_map_horizontal_length) {// 右面
-    //     map_horizontal_start = all_map_horizontal_length - show_map_horizontal_length;
-    // }
-    // //
-    //
-    //
-    // ctx.drawImage(
-    //     imageObj,
-    //     map_horizontal_start * block_horizontal_width, map_vertical_start * block_vertical_height,
-    //     show_map_horizontal_length * block_horizontal_width, show_map_vertical_length * block_vertical_height,
-    //     0, 0,
-    //     show_map_horizontal_length * block_horizontal_width, show_map_vertical_length * block_vertical_height);
 
     var draw_photo =
         draw_print(
@@ -343,21 +315,14 @@
         all_map_vertical_length, all_map_horizontal_length,
         draw_photo["map_vertical_start"], draw_photo["map_horizontal_start"],
         "start");
-    console.log("yan");
-    // });
 
-
-    // var reset_count = 0;
-    //
-    // if (reset_count < 1) {
-    //     reset_count = reset_count + 1;
-    //     history.go(0);
-    // }
 
     // 鍵盤出發圖片在地圖移動方向
     $(document).keydown(function (event) {
         //
         var move_place;
+        isChange = true;
+        $(this).addClass("editing");
         //
         switch (event.which) {
             case 37:// 鍵盤 左按鍵
@@ -426,6 +391,52 @@
                 move_place["place_direction"]);
 
         }
+        var now = new Date();
+
+        var y = now.getFullYear();
+        var m = now.getMonth();
+        var d = now.getDate();
+        var h = now.getHours();
+        var mm = now.getMinutes();
+        var s = now.getSeconds();
+        console.log(y + "-" + m + "-" + d + " " + h + ":" + mm + ":" + s);
+        console.log("[" + photo_center_vertical + "," + photo_center_horizontal + "]");
+        console.log(trajectory_status);
+        console.log("-------------");
+
+
+        var trajectory_date = y + "-" + m + "-" + d + " " + h + ":" + mm + ":" + s;
+        var trajectory_coordinate = photo_center_vertical + "," + photo_center_horizontal;
+        console.log("size=> " + trajectory.length);
+
+        console.log("----------------------------------------");
+
+        if (trajectory.length < 2) {
+            var t = {
+                "trajectory_date": trajectory_date,
+                "trajectory_coordinate": trajectory_coordinate,
+                "trajectory_status": trajectory_status
+            };
+
+            trajectory.push(JSON.stringify(t));
+        }
+
+
+        if (trajectory.length == 2) {
+            trajectory_count = trajectory_count + trajectory.length;
+            $.get("php/write_db_log.php", {
+                id: "yan",
+                trajectory: JSON.stringify(trajectory),
+                trajectory_count: trajectory_count
+            }, function (data) {
+                console.log(data);
+            });
+            // console.log(JSON.stringify(trajectory));
+            trajectory = new Array();
+            console.log("總筆數：" + trajectory_count);
+            console.log("++++++++++++++++++++++++++++++++");
+        }
+
     });// key
 
 
@@ -502,16 +513,13 @@
             photo_coordinate(new_horizontal, photo_block_horizontal_width, all_map_horizontal_length);
 
         var display_inline = 0;
+        trajectory_status = "pass";
         for (var v = photo_vertical_range["start"]; v <= photo_vertical_range["end"]; v++) {
             for (var h = photo_horizontal_range["start"]; h <= photo_horizontal_range["end"]; h++) {
 
-
-                // $("#dialog").css("display", "none");
-                console.log(v + "," + h);
-
-
                 if (map[v][h] > 1) { // 不可通行
                     // 存放未移動舊座標位置
+                    trajectory_status = "obstacle";
                     now_vertical = old_vertical;
                     now_horizontal = old_horizontal;
                     break;
@@ -519,13 +527,8 @@
                 if (74 <= v && v <= 74 && 75 <= h && h <= 75) {
                     console.log(">>>>>>>>>>>>> in");
                     // 存放未移動舊座標位置
+                    trajectory_status = "character_01";
 
-                    console.log("1=> " + v + "," + h);
-                    // console.log("1=> " + photo_horizontal_range["start"] + "," + photo_horizontal_range["end"]);
-                    // dialog＿message(photo_vertical_range["start"], photo_vertical_range["end"],
-                    //     photo_horizontal_range["start"], photo_horizontal_range["end"]);
-                    // break;
-                    // $("#dialog").css("display", "inline");
                     now_vertical = old_vertical;
                     now_horizontal = old_horizontal;
                     display_inline++;
@@ -535,7 +538,6 @@
                 } else {
                     $("#dialog").css("display", "none");
                 }
-
 
             }
         }
@@ -685,6 +687,35 @@
         if (location.href.indexOf("?xyz=") < 0) {
             location.href = location.href + "?xyz=" + Math.random();
         }
-    }</script>
+    }
+</script>
+
+
+<script>
+
+
+        // 當網頁關閉 或 重新整理網頁
+        $(window).bind('beforeunload', function (e) {
+            if (isChange || $(".editing").get().length > 0) {
+
+
+                trajectory_count = trajectory_count + trajectory.length;
+                $.get("php/write_db_log.php", {
+                    id: "yanyna_end",
+                    trajectory: JSON.stringify(trajectory),
+                    trajectory_count: trajectory_count
+                }, function (data) {
+                    console.log(data);
+                });
+                // console.log(JSON.stringify(trajectory));
+                trajectory = new Array();
+                console.log("總筆數：" + trajectory_count);
+                console.log("++++++++++++++++++++++++++++++++");
+                return '(((((((((★資料尚未存檔，確定是否要離開？★)))))))))';
+            }
+        });
+
+</script>
+
 
 </html>
