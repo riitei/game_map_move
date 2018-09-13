@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div style="border: red 3px solid;height: 100px;width: 100px;">
+    <!--<iframe src='topic/index.html' width='1400px' height='900px' scrolling='no' frameborder='0'></iframe>-->
+
+    yan
+</div>
+
+<script>
+    console.log("f_start");
+    ac();
+    console.log("f_end");
+    document.write("http://gamemapmove.riitei.com/game_v1/json/dialgo.json");
+    // document.write(obj);
+
+    function ac() {
+        $.getJSON("http://gamemapmove.riitei.com/game_v1/json/dialgo.json",function (data) {
+            // $.each(data, function (index, value) {
+            //     console.log(index + ' , ' + value);
+            // })
+            console.log(data["Character_01"]["dialgo"][0]);
+
+
+        });
+    }
+    // function ab() {
+    //
+    //     var obj = null;
+    //     $.ajax({
+    //         type: "GET",
+    //         url: "test_json.json",
+    //         dataType: "json",
+    //         sync: false,
+    //         success: function (data) {
+    //             $.each(data, function (index, value) {
+    //                 console.log(index + ' , ' + value);
+    //             })
+    //
+    //             // obj = data[0];
+    //             // console.log("yan ---------> " + obj);
+    //         }
+    //         // ,
+    //         // error: function (e) {
+    //         //     console.log(e);
+    //         // }
+    //     });
+    // }
+</script>
+</body>
+</html>

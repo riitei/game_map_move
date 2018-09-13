@@ -10,31 +10,40 @@ include "DBConnection.php";
 
 
 //echo "yan ting <br>";
-$id = $_GET['id'];
+$id = $_POST['id'];
+echo $_POST['trajectory'];
 $data = json_decode($_GET['trajectory']);
-
-//$myfile = fopen("yan.txt", "w") or die("Unable to open file!");
-//fwrite($myfile, $json);
-//fclose($myfile);
-
-//print_r($data[0]);
 
 for ($i = 0; $i < count($data); $i++) {
     $temp = json_decode($data[$i], true);
-//    echo $temp['trajectory_date'];
 
-
-    $sql =
-        "INSERT INTO `Log`( `student`, `trajectory_date`, `trajectory_coordinate`, `trajectory_status`)VALUES (
+    try {
+        $sql =
+            "INSERT INTO `Log`( `student`, `trajectory_date`, `trajectory_coordinate`, `trajectory_status`)VALUES (
         '" . $id . "',
         '" . $temp['trajectory_date'] . "',
         '" . $temp['trajectory_coordinate'] . "',
         '" . $temp['trajectory_status'] . "');";
-    $result = DBConnection::PDO()->prepare($sql);
-    $result->execute();
-
+        $result = DBConnection::PDO()->prepare($sql);
+        $result->execute();
+//        $run_result = 1;
+    } catch (PDOException $e) {
+//        $run_result = 0;
+        // 紀錄PDOException錯誤訊息
+        $myfile = fopen("no_write_db.json", "a") or die("Unable to open file!");
+        fwrite($myfile, $data[$i]);
+        fclose($myfile);
+        //
+        // DB寫入失敗寫入server
+        $error_file = fopen("pdo_error.txt", "a") or die("Unable to open file!");
+        fwrite($error_file, $e);
+        fclose($error_file);
+    }
 }
 
+
+//echo ;
+echo count($data);
 
 
 //for ($i = 0; $i < count($data); $i++) {

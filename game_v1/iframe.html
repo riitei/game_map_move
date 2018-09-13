@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+
+</head>
+
+<body>
+
+
+<div id="ex">
+
+</div>
+<script>
+
+    $("#ex").append("<iframe id = 'example_topic' src='topic/index.html' height='1000px' width='1400px' scrolling='no' frameborder='0'></iframe>");
+    console.log("001=> " + $("#example_topic").css("width"));
+    console.log("002=> " + $("#example_topic").attr("width"));
+
+    console.log("==> ");
+    $("#ex").empty();
+    console.log($("#ex"));
+</script>
+
+</body>
+</html>

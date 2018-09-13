@@ -1,0 +1,22 @@
+//{
+//  "0": "重慶",
+//  "1": "yan",
+//  "2": "<iframe src='topic/index.html' width='1400px' height='900px' scrolling='no' frameborder='0'></iframe>",
+//  "3": "台北",
+//  "4": "ting"
+//}
+{
+  "0": {
+    "mess": [
+      0:"yan",
+      "ting"
+    ],
+    "vertical_start": 5,
+    "vertical_end": 8,
+    "horizontal_start":5,
+    "horizontal_end":8,
+
+  },
+  "4": "ting",
+  "3": "yanyan"
+}

@@ -43,7 +43,7 @@
             margin: auto;
         }
 
-        .dialog {
+        .dialgo {
             top: 100px;
             left: 100px;
             position: absolute;
@@ -68,7 +68,7 @@
         <img id="down" class="photo" src="photo/down.png" style="display: none">
         <img id="left" class="photo" src="photo/left.png" style="display: none">
         <img id="right" class="photo" src="photo/right.png" style="display: none">
-        <div id="dialog" class="dialog"></div>
+        <div id="dialgo" class="dialgo"></div>
 
 </div>
 
@@ -324,13 +324,13 @@
                 //     console.log("1=> " + v + "," + h);
                 //     // console.log("1=> " + photo_horizontal_range["start"] + "," + photo_horizontal_range["end"]);
                 //
-                //     dialog＿message(photo_vertical_range["start"], photo_vertical_range["end"],
+                //     dialgo＿message(photo_vertical_range["start"], photo_vertical_range["end"],
                 //         photo_horizontal_range["start"], photo_horizontal_range["end"]);
                 //     now_vertical = old_vertical;
                 //     now_horizontal = old_horizontal;
                 //     // break;
                 // }
-                // $("#dialog").css("display", "none");
+                // $("#dialgo").css("display", "none");
             }
         }
         return {"now_vertical": now_vertical, "now_horizontal": now_horizontal};
@@ -489,22 +489,22 @@
     });
 </script>
 
-<!--dialog＿message-->
+<!--dialgo＿message-->
 <script>
 
-    function dialog＿message(photo_vertical_start, photo_vertical_end,
+    function dialgo＿message(photo_vertical_start, photo_vertical_end,
                             photo_horizontal_start, photo_horizontal_end) {
 
-        $("#dialog").empty();
-        $.post("php/dialog.php", {
+        $("#dialgo").empty();
+        $.post("php/dialgo.php", {
             vertical_start: photo_vertical_start,
             vertical_end: photo_vertical_end,
             horizontal_start: photo_horizontal_start,
             horizontal_end: photo_horizontal_end
         }, function (data) {
 
-            $("#dialog").append(data);
-            $("#dialog").css("display", "inline")
+            $("#dialgo").append(data);
+            $("#dialgo").css("display", "inline")
         });
 
     }

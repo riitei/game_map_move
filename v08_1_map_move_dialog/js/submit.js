@@ -1,7 +1,6 @@
 function code1submit() {
     // var pageCoords = gettime() + " ButtonClick( #submitcode1 )";
     // log = log + pageCoords + "\r\n";
-    alert("yan_show");
     var code1p = $('#code6').offset();
     var code1x = code1p.top;
     var code1y = code1p.left;

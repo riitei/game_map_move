@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+    <!--<script src="/scripts/script.js"></script>-->
+</head>
+<body>
+
+
+<script type="text/javascript">
+    $(document).keydown(function (event) {
+        var a = {
+            name: "yan",
+            city: "chongqing"
+        }
+
+
+        console.log(a);
+        var b = ajax_log(a);
+        //
+        console.log("======> " + b);
+        document.write(b);
+
+    });
+
+
+</script>
+
+
+<script type="text/javascript">
+
+    function ajax_log(a) {
+        var aa = "";
+        $.ajax({
+            type: "GET",
+            url: "ajax.php",
+            async: false,
+            data: {
+                test: JSON.stringify(a)
+            },
+            dataType: "json",
+            cache: false,
+            success: function (data) {
+                // aa = data;
+                // $.each(data,function (i,value) {
+                //     // console.log(index+" "+value);
+                //     console.log("=> "+data[i].city);
+                //     return data[i].city;
+                // });
+
+
+                aa =  data["name"];
+                // return aa;
+
+            },
+            error: function (e) {
+                console.log(e);
+            }
+        });
+        return aa;
+    }
+
+</script>
+
+</body>
+</html>

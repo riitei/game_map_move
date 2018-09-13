@@ -25,7 +25,7 @@
             margin: auto;
         }
 
-        .dialog {
+        .dialgo {
             top: 100px;
             left: 100px;
             position: absolute;
@@ -161,7 +161,7 @@
     <img id="img" src="map_move_json/map.png" style="display: none">
 
 
-    <div id="dialog" class="example">
+    <div id="dialgo" class="example">
 
         <div id="left_topic">
             <img src="img/topic.png"><br>
@@ -431,7 +431,7 @@
             for (var h = photo_horizontal_range["start"]; h <= photo_horizontal_range["end"]; h++) {
 
 
-                // $("#dialog").css("display", "none");
+                // $("#dialgo").css("display", "none");
                 console.log(v + "," + h);
 
 
@@ -447,18 +447,18 @@
 
                     console.log("1=> " + v + "," + h);
                     // console.log("1=> " + photo_horizontal_range["start"] + "," + photo_horizontal_range["end"]);
-                    // dialog＿message(photo_vertical_range["start"], photo_vertical_range["end"],
+                    // dialgo＿message(photo_vertical_range["start"], photo_vertical_range["end"],
                     //     photo_horizontal_range["start"], photo_horizontal_range["end"]);
                     // break;
-                    // $("#dialog").css("display", "inline");
+                    // $("#dialgo").css("display", "inline");
                     now_vertical = old_vertical;
                     now_horizontal = old_horizontal;
                     display_inline++;
                 }
                 if (display_inline == 1) {
-                    $("#dialog").css("display", "inline");
+                    $("#dialgo").css("display", "inline");
                 } else {
-                    $("#dialog").css("display", "none");
+                    $("#dialgo").css("display", "none");
                 }
 
 
@@ -612,26 +612,26 @@
 
 <script>
 
-    function dialog＿message(photo_vertical_start, photo_vertical_end,
+    function dialgo＿message(photo_vertical_start, photo_vertical_end,
                             photo_horizontal_start, photo_horizontal_end) {
 
-        // $("#dialog").empty();
-        // $("#dialog").css("display", "inline");
+        // $("#dialgo").empty();
+        // $("#dialgo").css("display", "inline");
 
-        // $.post("php/dialog.php", {
+        // $.post("php/dialgo.php", {
         //     vertical_start: photo_vertical_start,
         //     vertical_end: photo_vertical_end,
         //     horizontal_start: photo_horizontal_start,
         //     horizontal_end: photo_horizontal_end
         // }, function (data) {
         //
-        //     $("#dialog").append(data);
-        //     $("#dialog").css("display", "inline")
+        //     $("#dialgo").append(data);
+        //     $("#dialgo").css("display", "inline")
         // });
 
     }
 </script>
 
-<script src="/v08_1_map_move_dialog/js/drag.js"></script>
-<script src="/v08_1_map_move_dialog/js/submit.js"></script>
+<script src="/v08_1_map_move_dialgo/js/drag.js"></script>
+<script src="/v08_1_map_move_dialgo/js/submit.js"></script>
 </html>

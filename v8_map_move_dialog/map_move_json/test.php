@@ -7,7 +7,7 @@
  */
 
 
-$file_path = $_SERVER["DOCUMENT_ROOT"] . "v8_map_move_dialog/map_move_json/dialog.json";
+$file_path = $_SERVER["DOCUMENT_ROOT"] . "v8_map_move_dialgo/map_move_json/dialgo.json";
 
 try {
     $json = json_decode(file_get_contents($file_path), true);

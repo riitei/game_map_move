@@ -1,10 +1,11 @@
 function code1submit() {
     // var pageCoords = gettime() + " ButtonClick( #submitcode1 )";
     // log = log + pageCoords + "\r\n";
-
     var code1p = $('#code6').offset();
     var code1x = code1p.top;
     var code1y = code1p.left;
+
+
     //
     var submitcode1 = $('#drag1').offset();
     var submitcode1x = submitcode1.top;
@@ -47,7 +48,19 @@ function code1submit() {
     var code5dev = code5x - submitcode5x + code5y - submitcode5y;
 
     var fraction = 0;
-    console.log("yanting_start");
+    console.log("yan_yanting_start");
+    //--------------------------------
+    var answer_log = new Array();
+    answer_log[0] = $("#drag1").find('img').attr('id');
+    answer_log[1] = $("#drag2").find('img').attr('id');
+    answer_log[2] = $("#drag3").find('img').attr('id');
+    answer_log[3] = $("#drag4").find('img').attr('id');
+    answer_log[4] = $("#drag5").find('img').attr('id');
+
+    console.log("yanyan=> " + answer_log);
+
+
+    //--------------------------------
     if ((code1dev >= 0) && (code1dev <= 15) &&
         (code2dev >= 0) && (code2dev <= 15) &&
         (code3dev >= 0) && (code3dev <= 15) &&
@@ -66,16 +79,20 @@ function code1submit() {
     }
     else {
         // gox(-10);
-        console.log(-10);
+        console.log(-20);
         fraction = -10;
         // errorcount++;
         // var pageCoords = gettime() + " Drag1Error ( " + errorcount + " )";
         // log = log + pageCoords + "\r\n";
     }
-    console.log("yanting_end");
-    $.post("/php/write_fraction.php", {
-        "fraction": fraction
-    }, function (data) {
-        alert(data);
-    });
+    console.log("yan_yanting_end");
+
+
+    return 1;
+
+    // $.post("/php/write_fraction.php", {
+    //     "fraction": fraction
+    // }, function (data) {
+    //     alert(data);
+    // });
 };

@@ -85,10 +85,10 @@ form.coords input {
   opacity: 0.80;
   filter: alpha(opacity=70);
 }
-.jc-dialog {
+.jc-dialgo {
   padding-top: 1em;
 }
-.ui-dialog p tt {
+.ui-dialgo p tt {
   color: yellow;
 }
 .jcrop-light .jcrop-selection {

@@ -8,7 +8,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"
             integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
             crossorigin="anonymous"></script>
-
+    <script src="character.js"></script>
     <style type="text/css">
 
         /*圖片*/
@@ -26,17 +26,6 @@
             float: left;
         }
 
-        .dialog {
-            top: 100px;
-            left: 100px;
-            position: absolute;
-            z-index: 20;
-            background: lightskyblue;
-            height: 100px;
-            width: 400px;
-            display: inline;
-        }
-
         .example {
             top: 50px;
             left: 100px;
@@ -45,101 +34,16 @@
             z-index: 100;
 
             background: white;
-            width: 1100px;
-            height: 700px;
+            width: 500px;
+            height: 200px;
             overflow: hidden;
-
+            border: red 5px solid;
             display: none;
 
         }
 
-        #drag1 {
-            position: absolute;
-            height: 36px;
-            width: 400px;
-            margin: 10px;
-            padding: 2px;
-            border: 1px solid black;
-            z-index: 150;
-            top: 100px;
-        }
 
-        #drag2 {
-            position: absolute;
-            z-index: 150;
-            height: 36px;
-            width: 400px;
-            margin: 10px;
-            padding: 2px;
-            border: 1px solid black;
-            top: 174px;
 
-        }
-
-        #drag3 {
-            position: absolute;
-            z-index: 150;
-            height: 36px;
-            width: 400px;
-            margin: 10px;
-            padding: 2px;
-            border: 1px solid black;
-            top: 250px;
-
-        }
-
-        #drag4 {
-            position: absolute;
-            z-index: 150;
-            height: 36px;
-            width: 400px;
-            margin: 10px;
-            padding: 2px;
-            border: 1px solid black;
-            top: 327px;
-        }
-
-        #drag5 {
-            position: absolute;
-            z-index: 150;
-            height: 36px;
-            width: 400px;
-            margin: 10px;
-            padding: 2px;
-            border: 1px solid black;
-            top: 400px;
-        }
-
-        #drag17, #drag18, #drag19, #drag20, #drag21, #drag22, #drag23, #drag24 {
-            height: 36px;
-            width: 450px;
-            /*margin: 10px;*/
-            /*padding: 2px;*/
-            border: 1px solid black;
-            top: 200px;
-
-        }
-
-        #left_topic {
-            position: absolute;
-            float: left;
-            z-index: 100;
-        }
-
-        #submitcode1 {
-            /*background: red;*/
-            float: right;
-        }
-
-        #right_topic {
-            position: absolute;
-            z-index: 150;
-            /*width: 500px;*/
-            /*height: 500px;*/
-            /*background: #0000FF;*/
-            float: left;
-            margin-left: 600px;
-        }
 
     </style>
 
@@ -172,6 +76,9 @@
                     <button id="backtomenu" class="btn btn-lg btn-success btn-block" type="submit">Levels</button>
                 </div>
             </form>
+            <div id="test">
+
+            </div>
         </div>
     </div>
     <div id="center" class="center">
@@ -186,66 +93,15 @@
     </div>
 
 
-    <div id="dialog" class="example">
-
-        <div id="left_topic">
-            <img src="img/topic.png"><br>
-            <button id="submitcode1" onclick="code1submit()">submit</button>
+    <div id="dialgo" class="example">
+        <div id="mess">
         </div>
+        <button id="btn_up" type="button" value="0">上一句</button>
 
-        <div id="drag1" class="draggable-droppable"></div>
-        <div id="drag2" class="draggable-droppable"></div>
-        <div id="drag3" class="draggable-droppable"></div>
-        <div id="drag4" class="draggable-droppable"></div>
-        <div id="drag5" class="draggable-droppable"></div>
+        <button id="btn_down" type="button" value="0">下一句</button>
 
+        <!--            aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa-->
 
-        <div id="right_topic">
-            <h4>請完成右邊的Class Example。</h4>
-
-            <h4>
-                <div id="drag17" class="draggable-droppable">
-                    <img src="img/code1.png" id="code1">
-                    code1_and03
-                </div>
-            </h4>
-            <h4>
-                <div id="drag18" class="draggable-droppable">
-                    <img src="img/code2.png" id="code2">code2_and02
-                </div>
-            </h4>
-            <h4>
-                <div id="drag19" class="draggable-droppable">
-                    <img src="img/code3.png" id="code3">code3_and05
-                </div>
-            </h4>
-            <h4>
-                <div id="drag20" class="draggable-droppable">
-                    <img src="img/code4.png" id="code4">code4
-                </div>
-            </h4>
-            <h4>
-                <div id="drag21" class="draggable-droppable">
-                    <img src="img/code5.png" id="code5">code5_ans04
-                </div>
-            </h4>
-            <h4>
-                <div id="drag22" class="draggable-droppable">
-                    <img src="img/code6.png" id="code6">code6_ans01
-                </div>
-            </h4>
-            <h4>
-                <div id="drag23" class="draggable-droppable">
-                    <img src="img/code7.png" id="code7">code7
-                </div>
-            </h4>
-            <h4>
-                <div id="drag24" class="draggable-droppable">
-                    <img src="img/code8.png" id="code8">code8
-                </div>
-            </h4>
-        </div>
-        <!--    </div>-->
     </div>
 </div>
 
@@ -261,7 +117,7 @@
     var show_map_horizontal_length = 50; // 顯示水平長度
 
     // 圖片 中心點
-    var photo_center_vertical = 50;//3 圖片初始位置 陣列 欄
+    var photo_center_vertical = 60;//3 圖片初始位置 陣列 欄
     var photo_center_horizontal = 80;//6 圖片初始位置 陣列 列
 
     var block_vertical_height = JSON.parse(<?=$tileheight?>); // 初始每一個地圖的高度
@@ -390,53 +246,45 @@
                 draw_photo["map_vertical_start"], draw_photo["map_horizontal_start"],
                 move_place["place_direction"]);
 
-        }
-        var now = new Date();
 
-        var y = now.getFullYear();
-        var m = now.getMonth();
-        var d = now.getDate();
-        var h = now.getHours();
-        var mm = now.getMinutes();
-        var s = now.getSeconds();
-        console.log(y + "-" + m + "-" + d + " " + h + ":" + mm + ":" + s);
-        console.log("[" + photo_center_vertical + "," + photo_center_horizontal + "]");
-        console.log(trajectory_status);
-        console.log("-------------");
+            var now = new Date();
 
 
-        var trajectory_date = y + "-" + m + "-" + d + " " + h + ":" + mm + ":" + s;
-        var trajectory_coordinate = photo_center_vertical + "," + photo_center_horizontal;
-        console.log("size=> " + trajectory.length);
-
-        console.log("----------------------------------------");
-
-        if (trajectory.length < 2) {
+            var trajectory_date =
+                now.getFullYear() + "-" + now.getMonth() + "-" + now.getDate() + " "
+                + now.getHours() + ":" + now.getMinutes() + ":" + now.getSeconds();
+            var trajectory_coordinate = photo_center_vertical + "," + photo_center_horizontal;
+            // 把log 存放 stack
+            // if (trajectory.length < 3) {
+            console.log("push");
             var t = {
                 "trajectory_date": trajectory_date,
                 "trajectory_coordinate": trajectory_coordinate,
                 "trajectory_status": trajectory_status
             };
-
             trajectory.push(JSON.stringify(t));
+            console.log("Now_Array_Size " + trajectory.length);
+            console.log(t);
+
+            // }
+            // stack 滿了 傳送 db
+
+            if (trajectory.length >= 3) { // 存放 超過 n 筆，資料寫入ＤＢ
+                var ajax_data = ajax_log("yan", trajectory);
+                console.log("Ajax to DB => " + ajax_data);
+
+                if (ajax_data > 0) {
+                    trajectory = new Array();
+                    console.log("清除 Array");
+                }
+
+            }
+
+
+            trajectory_count = trajectory_count + 1;
+            console.log("累積筆數： " + trajectory_count);
+            console.log("------------------------------------------------");
         }
-
-
-        if (trajectory.length == 2) {
-            trajectory_count = trajectory_count + trajectory.length;
-            $.get("php/write_db_log.php", {
-                id: "yan",
-                trajectory: JSON.stringify(trajectory),
-                trajectory_count: trajectory_count
-            }, function (data) {
-                console.log(data);
-            });
-            // console.log(JSON.stringify(trajectory));
-            trajectory = new Array();
-            console.log("總筆數：" + trajectory_count);
-            console.log("++++++++++++++++++++++++++++++++");
-        }
-
     });// key
 
 
@@ -517,26 +365,21 @@
         for (var v = photo_vertical_range["start"]; v <= photo_vertical_range["end"]; v++) {
             for (var h = photo_horizontal_range["start"]; h <= photo_horizontal_range["end"]; h++) {
 
-                if (map[v][h] > 1) { // 不可通行
+                if (map[v][h] != 0) { // 不可通行
                     // 存放未移動舊座標位置
                     trajectory_status = "obstacle";
                     now_vertical = old_vertical;
                     now_horizontal = old_horizontal;
+                    display_inline = character(v, h);
+
                     break;
                 }
-                if (74 <= v && v <= 74 && 75 <= h && h <= 75) {
-                    console.log(">>>>>>>>>>>>> in");
-                    // 存放未移動舊座標位置
-                    trajectory_status = "character_01";
 
-                    now_vertical = old_vertical;
-                    now_horizontal = old_horizontal;
-                    display_inline++;
-                }
-                if (display_inline == 1) {
-                    $("#dialog").css("display", "inline");
-                } else {
-                    $("#dialog").css("display", "none");
+
+                if (display_inline != 1) {
+
+                    $("#dialgo").css("display", "none");
+
                 }
 
             }
@@ -656,31 +499,6 @@
     }
 </script>
 
-
-<script>
-
-    function dialog＿message(photo_vertical_start, photo_vertical_end,
-                            photo_horizontal_start, photo_horizontal_end) {
-
-        // $("#dialog").empty();
-        // $("#dialog").css("display", "inline");
-
-        // $.post("php/dialog.php", {
-        //     vertical_start: photo_vertical_start,
-        //     vertical_end: photo_vertical_end,
-        //     horizontal_start: photo_horizontal_start,
-        //     horizontal_end: photo_horizontal_end
-        // }, function (data) {
-        //
-        //     $("#dialog").append(data);
-        //     $("#dialog").css("display", "inline")
-        // });
-
-    }
-</script>
-
-<script src="/v08_1_map_move_dialog/js/drag.js"></script>
-<script src="/v08_1_map_move_dialog/js/submit.js"></script>
 <script>
     // 解決圖片載入問題，
     window.onload = function () {
@@ -694,28 +512,62 @@
 <script>
 
 
-        // 當網頁關閉 或 重新整理網頁
-        $(window).bind('beforeunload', function (e) {
-            if (isChange || $(".editing").get().length > 0) {
+    // 當網頁關閉 或 重新整理網頁
+    $(window).bind('beforeunload', function (e) {
+        if (isChange || $(".editing").get().length > 0) {
 
 
-                trajectory_count = trajectory_count + trajectory.length;
-                $.get("php/write_db_log.php", {
-                    id: "yanyna_end",
-                    trajectory: JSON.stringify(trajectory),
-                    trajectory_count: trajectory_count
-                }, function (data) {
-                    console.log(data);
-                });
-                // console.log(JSON.stringify(trajectory));
-                trajectory = new Array();
-                console.log("總筆數：" + trajectory_count);
-                console.log("++++++++++++++++++++++++++++++++");
-                return '(((((((((★資料尚未存檔，確定是否要離開？★)))))))))';
-            }
-        });
+            // trajectory = ajax_log("yan_end", trajectory);
+            //
+            // $.get("php/write_db_log.php", {
+            //     id: "yanyna_end",
+            //     trajectory: JSON.stringify(trajectory),
+            //     trajectory_count: trajectory_count
+            // }, function (data) {
+            //     console.log(data);
+            // });
+            // // console.log(JSON.stringify(trajectory));
+            // trajectory = new Array();
+            return '(((((((((★資料尚未存檔，確定是否要離開？★)))))))))';
+        }
+    });
 
 </script>
 
+
+<script>
+    // ajax 寫入db
+
+    function ajax_log(id, trajectory_log) {
+        var trajectory_count = 0;
+
+
+        $.ajax({
+            type: "GET",
+            url: "php/write_db_log.php",
+            async: false,
+            data: {
+                id: id,
+                trajectory: JSON.stringify(trajectory_log)
+            },
+            dataType: "json",
+            cache: false,
+            success: function (data) {
+
+
+                trajectory_count = JSON.parse(data);
+                console.log("---------------> " + trajectory_count);
+            }
+            // ,
+            // error: function (e) {
+            //     console.log(e);
+            // }
+        });
+        return trajectory_count;
+
+    }
+
+
+</script>
 
 </html>

@@ -4,31 +4,14 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
-
+    <script src="character.js"></script>
 </head>
 
 <script>
-    // if(window.name){
-    //     alert("第一次开这个窗口！name值"+ window.name);
-    //     window.name = 'lijia';
-    //
-    // }else{
-    //     alert('刷新操作 name值：'+ window.name);
-    // }
-    var isChange = false;
-    $(function () {
+    console.log("=> s");
+    character(5, 4);
+    console.log("=> e");
 
-        $("input,textarea,select").change(function () {
-            isChange = true;
-            $(this).addClass("editing");
-        });
-
-        $(window).bind('beforeunload', function (e) {
-            if (isChange || $(".editing").get().length > 0) {
-                return '★資料尚未存檔，確定是否要離開？★';
-            }
-        })
-    });
 </script>
 　　
 <body>
