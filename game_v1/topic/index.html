@@ -2,16 +2,9 @@
 <html>
 <head>
     <meta name="viewport" charset="utf-8" http-equiv="Content-Type">
-    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>-->
-    <!--<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>-->
-    <!--<script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>-->
-    <!--<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"-->
-    <!--integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">-->
-    <!--<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"-->
-    <!--integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"-->
-    <!--crossorigin="anonymous"></script>-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="../character.js"></script>
 </head>
 
 
@@ -106,7 +99,7 @@
 <div class="topic">
     <div id="left_topic">
         <img src="img/topic.png">
-        <button id="submitcode1" onclick="code1submit()">submit</button>
+        <button id="subcode1" class="sub_ans" onclick="code1submit()">submit</button>
     </div>
 
     <div id="drag1" class="draggable-droppable"></div>
@@ -166,6 +159,6 @@
 
 <script src="/game_v1/topic/js/drag.js"></script>
 <script src="/game_v1/topic/js/submit.js"></script>
-
+<script src="/game_v1/topic/js/clear.js"></script>
 </body>
 </html>

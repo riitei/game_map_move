@@ -2,8 +2,9 @@
   "Character_01": {
     "order": 1,
     "dialgo": {
-      "0": "yan",
+      "0": "yan_yan",
       "2": "ting",
+      "3":"chongqing_重慶",
       "1": "<iframe id='example_topic' src='topic/index.html' width='1100px' height='600px' scrolling='no' frameborder='0'></iframe>"
     },
     "vertical_start": 74,

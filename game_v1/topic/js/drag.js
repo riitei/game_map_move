@@ -44,7 +44,6 @@ var dragstage = "1";
             e.dataTransfer.setData(dataString, this.innerHTML);
 
             // var pageCoords = gettime() + " DragFrom ( " + dragstage + " " + $(e.toElement).attr('id') + " )";
-            console.log($(e.toElement).attr('id'));
             // log = log + pageCoords + "\r\n";
             //
             //e.dataTransfer.setDragImage(dragImg, 20, 50); //idk about a drag image
@@ -62,8 +61,6 @@ var dragstage = "1";
                 elementDragged.innerHTML = this.innerHTML;
                 this.innerHTML = e.dataTransfer.getData(dataString);
                 // var pageCoords = gettime() + " DragTo ( " + dragstage + " " + $(e.toElement).attr('id') + " )";
-                console.log($(e.toElement).attr('id'));
-                console.log("--------------");
                 // log = log + pageCoords + "\r\n";
             }
             //this.style.border = "2px solid transparent";

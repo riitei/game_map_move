@@ -8,6 +8,8 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"
             integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
             crossorigin="anonymous"></script>
+    <script src="/game_v1/topic/js/drag.js"></script>
+    <script src="/game_v1/topic/js/submit.js"></script>
     <script src="character.js"></script>
     <style type="text/css">
 
@@ -41,8 +43,6 @@
             display: none;
 
         }
-
-
 
 
     </style>
@@ -172,7 +172,6 @@
         draw_photo["map_vertical_start"], draw_photo["map_horizontal_start"],
         "start");
 
-
     // 鍵盤出發圖片在地圖移動方向
     $(document).keydown(function (event) {
         //
@@ -251,7 +250,7 @@
 
 
             var trajectory_date =
-                now.getFullYear() + "-" + now.getMonth() + "-" + now.getDate() + " "
+                now.getFullYear() + "-" + (now.getMonth() + 1) + "-" + now.getDate() + " "
                 + now.getHours() + ":" + now.getMinutes() + ":" + now.getSeconds();
             var trajectory_coordinate = photo_center_vertical + "," + photo_center_horizontal;
             // 把log 存放 stack
@@ -569,5 +568,6 @@
 
 
 </script>
+
 
 </html>

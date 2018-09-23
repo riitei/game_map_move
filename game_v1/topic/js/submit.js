@@ -48,7 +48,6 @@ function code1submit() {
     var code5dev = code5x - submitcode5x + code5y - submitcode5y;
 
     var fraction = 0;
-    console.log("yan_yanting_start");
     //--------------------------------
     var answer_log = new Array();
     answer_log[0] = $("#drag1").find('img').attr('id');
@@ -57,7 +56,6 @@ function code1submit() {
     answer_log[3] = $("#drag4").find('img').attr('id');
     answer_log[4] = $("#drag5").find('img').attr('id');
 
-    console.log("yanyan=> " + answer_log);
 
 
     //--------------------------------
@@ -67,7 +65,6 @@ function code1submit() {
         (code4dev >= 0) && (code4dev <= 15) &&
         (code5dev >= 0) && (code5dev <= 15)) {
         // gox(25);
-        console.log(25);
         fraction = 25;
         // var exampleClass4 = document.getElementById('exampleClass4');
         // exampleClass4.close();
@@ -81,7 +78,6 @@ function code1submit() {
     }
     else {
         // gox(-10);
-        console.log(-30);
         fraction = -10;
 
 
@@ -89,9 +85,6 @@ function code1submit() {
         // var pageCoords = gettime() + " Drag1Error ( " + errorcount + " )";
         // log = log + pageCoords + "\r\n";
     }
-    console.log("yan_yanting_end_重慶");
-    alert("a")
-    console.log($("#test").append("chongqing"));
     // $("#mess").empty();
     // $("#mess").append("yanyan");
     // console.log("關閉");
